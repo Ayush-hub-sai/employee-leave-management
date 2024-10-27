@@ -1,0 +1,31 @@
+<mat-toolbar class="mat-elevation-z3">
+    <button mat-icon-button (click)="collapsed.set(!collapsed())">
+        <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-sidenav-container>
+    <mat-sidenav opened mode="side" [style.width]="sidenavWidth()">
+        <!-- <app-sidebar [collapsedData]="collapsed()"></app-sidebar> -->
+        <div class="sidenav-header">
+            <img src="image/pic.jpg" alt="Avtar" [height]="profilePicSize()" [width]="profilePicSize()">
+            <div class="header-text" [class.hide-header-text]="collapsed()">
+                <p>Bishnu Behera</p>
+            </div>
+        </div>
+        <mat-nav-list>
+            @for (item of menuItem(); track item) {
+            <a mat-list-item class="menu-item" [routerLink]="item.route" routerLinkActive="selected-menu-item"
+                #rla="routerLinkActive" [activated]="rla.isActive">
+                <mat-icon matListItemIcon
+                    [fontSet]="rla.isActive?'material-icons':'material-icons-outlined'">{{item.icon}}</mat-icon>
+                @if(!collapsed()){
+                <span matListItemTitle> {{ item.label }}</span>
+                }
+            </a>
+            }
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="content" [style.margin-left]="sidenavWidth()">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
